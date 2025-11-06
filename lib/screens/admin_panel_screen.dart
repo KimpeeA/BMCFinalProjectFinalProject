@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ecommerce_app/screens/admin_order_screen.dart'; // 1. ADD THIS
 
 class AdminPanelScreen extends StatefulWidget {
   const AdminPanelScreen({super.key});
@@ -110,7 +111,7 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
                       return 'Please enter an image URL';
                     }
                     if (!value.startsWith('http')) {
-                      return 'Please enter a valid URL (e.g., http://...)';
+                      return 'Please enter a valid URL (e.g., https://...)';
                     }
                     return null;
                   },
