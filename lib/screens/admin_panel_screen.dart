@@ -101,6 +101,36 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                // 3. --- ADD THIS NEW BUTTON ---
+                ElevatedButton.icon(
+                  icon: const Icon(Icons.list_alt),
+                  label: const Text('Manage All Orders'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.indigo, // A different color
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    textStyle: const TextStyle(fontSize: 16),
+                  ),
+                  onPressed: () {
+                    // 4. Navigate to our new screen
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const AdminOrderScreen(),
+                      ),
+                    );
+                  },
+                ),
+
+                // 5. A divider to separate it
+                const Divider(height: 30, thickness: 1),
+
+                const Text(
+                  'Add New Product',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 10),
+
                 // 4. The "Image URL" text field
                 TextFormField(
                   controller: _imageUrlController,
@@ -111,7 +141,7 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
                       return 'Please enter an image URL';
                     }
                     if (!value.startsWith('http')) {
-                      return 'Please enter a valid URL (e.g., https://...)';
+                      return 'Please enter a valid URL (e.g., http://...)';
                     }
                     return null;
                   },
@@ -164,7 +194,7 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
                   // 10. If loading, show spinner, else show text
                   child: _isLoading
                       ? const CircularProgressIndicator()
-                      : const Text('Upload Product')
+                      : const Text('Upload Product'),
                 ),
               ],
             ),
