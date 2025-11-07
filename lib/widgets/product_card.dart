@@ -19,6 +19,7 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     // 1. The Card will get its style from our new 'cardTheme'
     return InkWell(
       onTap: onTap,
@@ -37,13 +38,17 @@ class ProductCard extends StatelessWidget {
                 // Show a loading spinner
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) return child;
-                  return const Center(child: CircularProgressIndicator());
+                  return Center(
+                      child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                        theme.colorScheme.primary),
+                  ));
                 },
 
                 // Show an error icon
                 errorBuilder: (context, error, stackTrace) {
-                  return const Center(
-                    child: Icon(Icons.broken_image, size: 40, color: Colors.grey),
+                  return Center(
+                    child: Icon(Icons.broken_image, size: 40, color: theme.colorScheme.error),
                   );
                 },
               ),
@@ -61,9 +66,8 @@ class ProductCard extends StatelessWidget {
                     // Product Name
                     Text(
                       productName,
-                      style: const TextStyle(
+                      style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
-                        fontSize: 16,
                       ),
                       maxLines: 2, // Allow two lines for the name
                       overflow: TextOverflow.ellipsis,
@@ -73,10 +77,9 @@ class ProductCard extends StatelessWidget {
                     // Price
                     Text(
                       '₱${price.toStringAsFixed(2)}',
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.grey[800],
-                        fontWeight: FontWeight.bold
+                      style: theme.textTheme.bodyLarge?.copyWith(
+                        color: theme.colorScheme.secondary,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],

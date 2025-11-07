@@ -47,6 +47,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     final String description = widget.productData['description'];
     final String imageUrl = widget.productData['imageUrl'];
     final double price = widget.productData['price'];
+    final theme = Theme.of(context);
 
     // 2. Get the CartProvider (same as before)
     final cart = Provider.of<CartProvider>(context, listen: false);
@@ -65,15 +66,18 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               fit: BoxFit.cover,
               loadingBuilder: (context, child, loadingProgress) {
                 if (loadingProgress == null) return child;
-                return const SizedBox(
+                return SizedBox(
                   height: 300,
-                  child: Center(child: CircularProgressIndicator()),
+                  child: Center(
+                      child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(theme.colorScheme.primary),
+                  )),
                 );
               },
               errorBuilder: (context, error, stackTrace) {
-                return const SizedBox(
+                return SizedBox(
                   height: 300,
-                  child: Center(child: Icon(Icons.broken_image, size: 100)),
+                  child: Center(child: Icon(Icons.broken_image, size: 100, color: theme.colorScheme.error)),
                 );
               },
             ),
@@ -84,18 +88,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 children: [
                   Text(
                     name,
-                    style: const TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     '₱${price.toStringAsFixed(2)}',
-                    style: TextStyle(
-                      fontSize: 24,
+                    style: theme.textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.w600,
-                      color: Colors.deepPurple,
+                      color: theme.colorScheme.secondary,
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -103,15 +103,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   const SizedBox(height: 16),
                   Text(
                     'About this item',
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: theme.textTheme.titleLarge,
                   ),
                   const SizedBox(height: 8),
                   Text(
                     description,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      height: 1.5, // Adds line spacing for readability
-                    ),
+                    style: theme.textTheme.bodyLarge?.copyWith(height: 1.5),
                   ),
                   const SizedBox(height: 20),
                   Row(
@@ -128,7 +125,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Text(
                           '$_quantity', // 7. Display our state variable
-                          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                          style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
                         ),
                       ),
                         
@@ -158,6 +155,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text('Added $_quantity x $name to cart!'),
+                          backgroundColor: theme.colorScheme.secondary,
                           duration: const Duration(seconds: 2),
                         ),
                       );

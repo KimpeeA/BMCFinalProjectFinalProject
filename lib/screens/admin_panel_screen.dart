@@ -63,7 +63,10 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
 
       // 7. If successful, show a confirmation message
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Product uploaded successfully!')),
+        SnackBar(
+          content: const Text('Product uploaded successfully!'),
+          backgroundColor: Theme.of(context).colorScheme.secondary,
+          ),      
       );
 
       // 8. Clear all the text fields
@@ -76,7 +79,7 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
       // 9. If something went wrong, show an error
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('Failed to upload product: $e')));
+      ).showSnackBar(SnackBar(content: Text('Failed to upload product: $e'), backgroundColor: Theme.of(context).colorScheme.error,));
     } finally {
       // 10. ALWAYS hide the loading spinner
       if (mounted) {
@@ -89,6 +92,7 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(title: const Text('Admin - Add Product')),
       // 1. Lets the user scroll if the keyboard covers the fields
@@ -106,8 +110,8 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
                   icon: const Icon(Icons.list_alt),
                   label: const Text('Manage All Orders'),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.indigo, // A different color
-                    foregroundColor: Colors.white,
+                    backgroundColor: theme.colorScheme.secondary, 
+                    foregroundColor: theme.colorScheme.onSecondary,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     textStyle: const TextStyle(fontSize: 16),
                   ),
@@ -124,9 +128,9 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
                 // 5. A divider to separate it
                 const Divider(height: 30, thickness: 1),
 
-                const Text(
+                Text(
                   'Add New Product',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 10),
@@ -193,7 +197,7 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
                   onPressed: _isLoading ? null : _uploadProduct,
                   // 10. If loading, show spinner, else show text
                   child: _isLoading
-                      ? const CircularProgressIndicator()
+                      ? CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(theme.colorScheme.onPrimary),)
                       : const Text('Upload Product'),
                 ),
               ],

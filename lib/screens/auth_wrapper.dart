@@ -1,6 +1,6 @@
 // Part 1: Imports
-import 'home_screen.dart';
-import 'login_screen.dart';
+import 'package:ecommerce_app/screens/home_screen.dart';
+import 'package:ecommerce_app/screens/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -19,8 +19,13 @@ class AuthWrapper extends StatelessWidget {
       builder: (context, snapshot) {
         // 4. If the snapshot is still loading, show a spinner
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
+          return Scaffold(
+            body: Center(
+                child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(
+                Theme.of(context).colorScheme.primary,
+              ),
+            )),
           );
         }
 

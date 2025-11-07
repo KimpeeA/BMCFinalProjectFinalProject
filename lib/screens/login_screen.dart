@@ -1,4 +1,4 @@
-import 'signup_screen.dart';
+import 'package:ecommerce_app/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart'; // 1. Add Firebase Auth import
 
@@ -64,7 +64,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
       // 6. Show the error message in a SnackBar
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(message), backgroundColor: Colors.red),
+        SnackBar(
+          content: Text(message),
+          backgroundColor: Theme.of(context).colorScheme.error,
+        ),
       );
     } catch (e) {
       // 7. Catch any other general errors
@@ -80,7 +83,6 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  @override
   @override
   Widget build(BuildContext context) {
     // 1. A Scaffold provides the basic screen structure
@@ -108,7 +110,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   controller: _emailController, // 3. Link the controller
                   decoration: const InputDecoration(
                     labelText: 'Email',
-                    border: OutlineInputBorder(), // 4. Nice border
                   ),
                   keyboardType:
                       TextInputType.emailAddress, // 5. Show '@' on keyboard
@@ -133,7 +134,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   obscureText: true, // 10. This hides the password
                   decoration: const InputDecoration(
                     labelText: 'Password',
-                    border: OutlineInputBorder(),
                   ),
                   // 11. Validator function
                   validator: (value) {
@@ -160,9 +160,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: _login,
 
                   child: _isLoading
-                      ? const CircularProgressIndicator(
+                      ? CircularProgressIndicator(
                           valueColor: AlwaysStoppedAnimation<Color>(
-                            Colors.white,
+                            Theme.of(context).colorScheme.onPrimary,
                           ),
                         )
                       : const Text('Login'),

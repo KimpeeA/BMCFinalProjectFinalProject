@@ -11,6 +11,7 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // 3. We listen: true, so the list and total update
     final cart = Provider.of<CartProvider>(context);
+    final theme = Theme.of(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -28,17 +29,18 @@ class CartScreen extends StatelessWidget {
                       final cartItem = cart.items[index];
                       return ListTile(
                         leading: CircleAvatar(
-                          child: Text(cartItem.name[0]),
+                          backgroundColor: theme.colorScheme.secondary,
+                          child: Text(cartItem.name[0], style: TextStyle(color: theme.colorScheme.onSecondary)),
                         ),
-                        title: Text(cartItem.name),
-                        subtitle: Text('Qty: ${cartItem.quantity}'),
+                        title: Text(cartItem.name, style: theme.textTheme.titleMedium),
+                        subtitle: Text('Qty: ${cartItem.quantity}', style: theme.textTheme.bodySmall),
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                                '₱${(cartItem.price * cartItem.quantity).toStringAsFixed(2)}'),
+                                '₱${(cartItem.price * cartItem.quantity).toStringAsFixed(2)}', style: theme.textTheme.bodyLarge),
                             IconButton(
-                              icon: const Icon(Icons.delete, color: Colors.red),
+                              icon: Icon(Icons.delete, color: theme.colorScheme.error),
                               onPressed: () {
                                 cart.removeItem(cartItem.id);
                               },
@@ -60,26 +62,29 @@ class CartScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Subtotal:', style: TextStyle(fontSize: 16)),
-                      Text('₱${cart.subtotal.toStringAsFixed(2)}', style: const TextStyle(fontSize: 16)),
+                      Text('Subtotal:', style: theme.textTheme.bodyLarge),
+                      Text('₱${cart.subtotal.toStringAsFixed(2)}', style: theme.textTheme.bodyLarge),
                     ],
                   ),
                   const SizedBox(height: 8),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('VAT (12%):', style: TextStyle(fontSize: 16)),
-                      Text('₱${cart.vat.toStringAsFixed(2)}', style: const TextStyle(fontSize: 16)),
+                      Text('VAT (12%):', style: theme.textTheme.bodyLarge),
+                      Text('₱${cart.vat.toStringAsFixed(2)}', style: theme.textTheme.bodyLarge),
                     ],
                   ),
                   const Divider(height: 20, thickness: 1),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Total:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                      Text('Total:', style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
                       Text(
                         '₱${cart.totalPriceWithVat.toStringAsFixed(2)}',
-                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.deepPurple),
+                        style: theme.textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: theme.colorScheme.primary,
+                        ),
                       ),
                     ],
                   ),

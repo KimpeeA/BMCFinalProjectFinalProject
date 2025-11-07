@@ -67,6 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Image.asset(
@@ -81,6 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
               return Badge(
                 label: Text(cart.itemCount.toString()),
                 isLabelVisible: cart.itemCount > 0,
+                backgroundColor: theme.colorScheme.secondary,
                 child: IconButton(
                   icon: const Icon(Icons.shopping_cart),
                   onPressed: () {
@@ -152,7 +154,10 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context, snapshot) {
           // 5. STATE 1: While data is loading
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(
+                child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(theme.colorScheme.primary),
+            ));
           }
 
           // 6. STATE 2: If an error occurs
@@ -249,6 +254,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 //    We wrap the FAB in the Badge widget
 
                 return Badge(
+                  backgroundColor: theme.colorScheme.secondary,
 
                   // 6. Show the count in the badge
 
@@ -265,6 +271,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     icon: const Icon(Icons.support_agent),
 
                     label: const Text('Contact Admin'),
+                    backgroundColor: theme.colorScheme.primary,
+                    foregroundColor: theme.colorScheme.onPrimary,
 
                     onPressed: () {
 

@@ -103,7 +103,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   controller: _emailController, // 3. Link the controller
                   decoration: const InputDecoration(
                     labelText: 'Email',
-                    border: OutlineInputBorder(), // 4. Nice border
                   ),
                   keyboardType:
                       TextInputType.emailAddress, // 5. Show '@' on keyboard
@@ -128,7 +127,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   obscureText: true, // 10. This hides the password
                   decoration: const InputDecoration(
                     labelText: 'Password',
-                    border: OutlineInputBorder(),
                   ),
                   // 11. Validator function
                   validator: (value) {
@@ -154,9 +152,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   onPressed: _signUp,
 
                   child: _isLoading
-                      ? const CircularProgressIndicator(
+                      ? CircularProgressIndicator(
                           valueColor: AlwaysStoppedAnimation<Color>(
-                            Colors.white,
+                            Theme.of(context).colorScheme.onPrimary,
                           ),
                         )
                       : const Text('Sign Up'),
