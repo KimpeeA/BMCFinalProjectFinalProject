@@ -5,23 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_fonts/google_fonts.dart'; // 1. ADD THIS IMPORT
+import 'package:google_fonts/google_fonts.dart';
 
-// Gruvbox Dark Theme Color Palette
-const Color kGruvboxBg = Color(0xFF282828);
-const Color kGruvboxFg = Color(0xFFEBDBB2);
-const Color kGruvboxRed = Color(0xFFCC241D);
-const Color kGruvboxGreen = Color(0xFF98971A);
-const Color kGruvboxYellow = Color(0xFFD79921);
-const Color kGruvboxBlue = Color(0xFF458588);
-const Color kGruvboxPurple = Color(0xFFB16286);
-const Color kGruvboxAqua = Color(0xFF689D6A);
-const Color kGruvboxGray = Color(0xFFA89984);
-const Color kGruvboxOrange = Color(0xFFD65D0E);
-const Color kGruvboxLightBg = Color(0xFF3C3836);
-const Color kGruvboxDarkRed = Color(0xFFFB4934);
-
+// New Theme Color Palette
+const Color kDarkBg = Color(0xFF1F1F1F);
+const Color kMetallicGold = Color(0xFFD4AF37); // A nice gold color
+const Color kLightGold = Color(0xFFE5C100);
+const Color kWhiteText = Color(0xFFFFFFFF);
+const Color kGreyText = Color(0xFFBDBDBD);
+const Color kErrorRed = Color(0xFFCF6679);
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -47,66 +39,88 @@ class MyApp extends StatelessWidget {
       title: 'eCommerce App',
       theme: ThemeData(
         brightness: Brightness.dark,
+        scaffoldBackgroundColor: kDarkBg,
+        primaryColor: kMetallicGold,
+        // Define the color scheme
         colorScheme: ColorScheme.fromSeed(
-          seedColor: kGruvboxBlue,
+          seedColor: kMetallicGold,
           brightness: Brightness.dark,
-          primary: kGruvboxBlue,
-          onPrimary: kGruvboxFg,
-          secondary: kGruvboxAqua,
-          background: kGruvboxBg,
-          surface: kGruvboxLightBg,
-          onSurface: kGruvboxFg,
-          error: kGruvboxRed,
-          onError: kGruvboxFg,
+          background: kDarkBg,
+          primary: kMetallicGold,
+          secondary: kLightGold,
+          onPrimary: kDarkBg,       // Text on top of primary color
+          onSecondary: kDarkBg,     // Text on top of secondary color
+          surface: kDarkBg,
+          onSurface: kWhiteText,    // Default text color
+          error: kErrorRed,
+          onError: kDarkBg,
         ),
+
+        // Use Material 3 design
         useMaterial3: true,
-        scaffoldBackgroundColor: kGruvboxBg,
+
+        // Define Text Theme
         textTheme: GoogleFonts.latoTextTheme(
           Theme.of(context).textTheme.apply(
-                bodyColor: kGruvboxFg,
-                displayColor: kGruvboxFg,
+                bodyColor: kWhiteText,
+                displayColor: kWhiteText,
               ),
         ),
+
+        // Define Elevated Button Theme
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: kGruvboxBlue,
-            foregroundColor: kGruvboxFg, // Corrected from kGruvboxBg
+            backgroundColor: kMetallicGold,
+            foregroundColor: kDarkBg, // Text color on button
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),
           ),
         ),
+
+        // Define Input Decoration Theme for TextFields
         inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: const Color(0xFF2A2A2A),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(color: kGruvboxGray.withOpacity(0.5)),
+            borderSide: BorderSide.none,
           ),
-          labelStyle: TextStyle(color: kGruvboxGray),
+          labelStyle: const TextStyle(color: kGreyText),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(color: kGruvboxBlue, width: 2.0),
+            borderSide: const BorderSide(color: kMetallicGold, width: 2.0),
           ),
-          fillColor: kGruvboxLightBg,
-          filled: true,
         ),
+
+        // Define Card Theme
         cardTheme: CardThemeData(
           elevation: 2,
-          color: kGruvboxLightBg,
+          color: const Color(0xFF2A2A2A),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
           clipBehavior: Clip.antiAlias,
         ),
+
+        // Define AppBar Theme
         appBarTheme: const AppBarTheme(
-          backgroundColor: kGruvboxLightBg,
-          foregroundColor: kGruvboxFg,
+          backgroundColor: kDarkBg,
           elevation: 0,
           centerTitle: true,
+          iconTheme: IconThemeData(color: kWhiteText),
+          titleTextStyle: TextStyle(
+            color: kWhiteText,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
         ),
+
+        // Define Text Button Theme
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
-            foregroundColor: kGruvboxAqua,
+            foregroundColor: kMetallicGold,
           ),
         ),
       ),

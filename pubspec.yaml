@@ -95,14 +95,14 @@ flutter:
 flutter_native_splash:
 
   # 2. Set the background color of your splash screen
-  color: "#FFFFFF" # This is white
+  color: "#000000" # This is a dark background color
 
   # 3. Point to your splash logo file
   image: assets/images/splash_logo.png
 
   # 4. Configuration for the Android splash screen
   android_12:
-    color: "#FFFFFF"
+    color: "#000000"
     image: assets/images/splash_logo.png
 
   # 5. Configuration for the web splash screen
